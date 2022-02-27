@@ -18,13 +18,15 @@ import service.EmailService;
 public class EmailController {
 
 	@Autowired
-	EmailService emailService; //injeção de dep. do service
+	private EmailService emailService; //injeção de dep. do service
 	
-	@PostMapping("/sending-email")
-	public ResponseEntity<EmailModel> sendingEmail(@RequestBody @Valid EmailDto emailDto){
+	@PostMapping("/sending-email")/*uri sending-email é disparado quando alguem enviar email*/
+	public ResponseEntity<EmailModel> sendingEmail(@RequestBody @Valid EmailDto emailDto){/*@valid faz a validação de todos os atributos do emailDTO*/
 		EmailModel emailModel = new EmailModel();
-		BeanUtils.copyProperties(emailDto, emailModel);/*este metodo faz a converção de DTO pra MODEL*/
+		BeanUtils.copyProperties(emailDto, emailModel);/*este metodo faz a converção de DTO pra MODEL para poder salvar no BD*/
 		emailService.sendEmail(emailModel);/*este metodo faz a converção de DTO pra MODEL*/
 		return new ResponseEntity<>(emailModel, HttpStatus.CREATED);/*retorna para o cliente um MODEL e o STATUS*/
+		/*apos realizar o metodo SENDEMAIL na classe Controller 
+		 * é retornado ao controller o emailModel se foi enviado ou não atraves do metodo CREATED*/
 	}
 }

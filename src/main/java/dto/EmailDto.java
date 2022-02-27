@@ -8,9 +8,9 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class EmailDto {
+public class EmailDto { /*DTO é o objeto que a gente recebe no metodo POST*/
 
-	@NotBlank
+	@NotBlank /*TORNA O CAMPO OBRIGATORIO*/
 	private String ownerRef; /*ref do usuario*/
 	@NotBlank
 	@Email
