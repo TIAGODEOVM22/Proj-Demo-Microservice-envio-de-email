@@ -1,4 +1,4 @@
-package service;
+package com.ms.email.service;
 
 import java.time.LocalDateTime;
 
@@ -8,20 +8,20 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import enums.StatusEmail;
-import model.EmailModel;
-import repository.EmailRepository;
+import com.ms.email.enums.StatusEmail;
+import com.ms.email.model.EmailModel;
+import com.ms.email.repository.EmailRepository;
 
 @Service
 public class EmailService {
 
-	@Autowired /*injeção de dep. do repository*/
+	@Autowired
 	private EmailRepository emailRepository;
 	
 	@Autowired
 	private JavaMailSender emailSender;/*injeção de dep do JavaEmailSender, esta dependencia esta no arquivo POM*/
 	
-						/*nome do metodo SENDEMAIL*/
+	/*nome do metodo SENDEMAIL*/
 	public EmailModel sendEmail(EmailModel emailModel) {/*Metodo salva e envia email*/
 		emailModel.setSendDateEmail(LocalDateTime.now());/*seta a data de envio do email atraves do atributo setSendDateEmail*/
 		
@@ -40,8 +40,7 @@ public class EmailService {
 			emailModel.setStatusEmail(StatusEmail.ERROR);
 			/*se der errado, o emailModel sera setado como Status ERROR*/
 			
-		}finally {
-			/*Aqui salva o email model como SENT ou ERROR*/
+		}finally {/*Aqui salva o email model como SENT ou ERROR*/
 			return emailRepository.save(emailModel);
 		}
 		
